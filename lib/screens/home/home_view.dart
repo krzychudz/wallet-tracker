@@ -7,7 +7,16 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Wallet tracker"),
+        title: Text(
+          "Wallet\ntracker",
+          style: Theme.of(context).textTheme.headline1,
+        ),
+        actions: [
+          IconButton(
+            onPressed: null,
+            icon: Icon(Icons.menu),
+          ),
+        ],
       ),
     );
   }
