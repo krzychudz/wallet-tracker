@@ -5,6 +5,7 @@ ThemeData themeData(BuildContext context) {
   return Theme.of(context).copyWith(
     primaryColor: Colors.white,
     accentColor: Colors.black,
+    backgroundColor: const Color(0xffE5E5E5),
     textTheme: TextTheme(
       headline1: GoogleFonts.montserrat(
         color: Colors.black,
