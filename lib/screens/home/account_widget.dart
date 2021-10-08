@@ -11,12 +11,61 @@ class AccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Text(
-        account.name,
-        style: Theme.of(context).textTheme.bodyText1,
-      ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                child: Container(
+                  color: Colors.red,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 8.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      account.name,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      account.additionalInfo,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Dostępne środki",
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            fontSize: 11.0,
+                          ),
+                    ),
+                    Text(
+                      account.balance.toString(),
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 11.0,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Divider(
+          height: 1,
+        ),
+      ],
     );
   }
 }
