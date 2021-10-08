@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../account/models/account.dart';
+import '../../extensions/number_extension.dart';
 
 class AccountView extends StatelessWidget {
   const AccountView({
@@ -51,7 +52,7 @@ class AccountView extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      account.balance.toString(),
+                      account.balance.toAccountBalance(),
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             fontSize: 11.0,
                           ),

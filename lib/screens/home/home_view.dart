@@ -36,7 +36,15 @@ class HomeView extends StatelessWidget {
               id: "1",
               name: "First Account",
               additionalInfo: "PKO BP",
-              balance: 100,
+              balance: 1500000,
+            ),
+          ),
+          AccountView(
+            account: Account(
+              id: "2",
+              name: "Second Account",
+              additionalInfo: "Santander",
+              balance: 3150000,
             ),
           ),
         ],
