@@ -23,42 +23,44 @@ class AccountView extends StatelessWidget {
                   color: Colors.red,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 8.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      account.name,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    Text(
-                      account.additionalInfo,
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ],
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 8.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        account.name,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                      Text(
+                        account.additionalInfo,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Dostępne środki",
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                            fontSize: 11.0,
-                          ),
-                    ),
-                    Text(
-                      account.balance.toAccountBalance(),
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 11.0,
-                          ),
-                    ),
-                  ],
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Dostępne środki",
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                          fontSize: 11.0,
+                        ),
+                    textAlign: TextAlign.start,
+                  ),
+                  Text(
+                    account.balance.toAccountBalance(),
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 11.0,
+                        ),
+                    textAlign: TextAlign.start,
+                  ),
+                ],
               ),
             ],
           ),

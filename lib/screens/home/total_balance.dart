@@ -16,20 +16,25 @@ class TotalBalance extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Container(
         width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+        child: Row(
           children: [
-            Text(
-              "Suma",
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                    fontSize: 11.0,
-                  ),
-            ),
-            Text(
-              totalBalance.toAccountBalance(),
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 11.0,
-                  ),
+            Spacer(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Suma",
+                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        fontSize: 11.0,
+                      ),
+                ),
+                Text(
+                  totalBalance.toAccountBalance(),
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 11.0,
+                      ),
+                ),
+              ],
             ),
           ],
         ),
