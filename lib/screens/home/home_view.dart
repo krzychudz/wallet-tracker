@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wallet_tracker/account/models/account.dart';
 import './account_widget.dart';
+import './total_balance.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -47,6 +48,7 @@ class HomeView extends StatelessWidget {
               balance: 3150000,
             ),
           ),
+          TotalBalance(totalBalance: 4650000),
         ],
       ),
     );
