@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 
 import '../models/account.dart';
 
-enum AccountStatus { initial, success, failure }
+enum AccountStatus { inProgress, success, failure }
 
 class AccountFetchState extends Equatable {
   final AccountStatus status;
   final List<Account> data;
 
   const AccountFetchState({
-    this.status = AccountStatus.initial,
+    this.status = AccountStatus.inProgress,
     this.data = const <Account>[],
   });
 

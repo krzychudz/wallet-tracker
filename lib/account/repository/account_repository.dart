@@ -1,6 +1,5 @@
-import 'package:wallet_tracker/account/models/account.dart';
-
 import './account_repository_interface.dart';
+import '../models/account.dart';
 
 class AccountRepository implements AccountRepositoryInterface {
   @override
@@ -10,8 +9,23 @@ class AccountRepository implements AccountRepositoryInterface {
   }
 
   @override
-  Future<List<Account>> getAccounts() {
-    // TODO: implement getAccounts
-    throw UnimplementedError();
+  Future<List<Account>> getAccounts() async {
+    // TODO: Change mocked data once db is ready
+    List<Account> mockedAccounts = [
+      Account(
+        id: "1",
+        name: "First Account",
+        additionalInfo: "PKO BP",
+        balance: 1500000,
+      ),
+      Account(
+        id: "2",
+        name: "Second Account",
+        additionalInfo: "Santander",
+        balance: 3150000,
+      ),
+    ];
+
+    return await Future.delayed(Duration(seconds: 3), () => mockedAccounts);
   }
 }
