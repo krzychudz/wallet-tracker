@@ -2,6 +2,8 @@ import './account_repository_interface.dart';
 import '../models/account.dart';
 
 class AccountRepository implements AccountRepositoryInterface {
+  AccountRepository();
+
   @override
   Future<bool> createNewAccount(Account accountData) {
     // TODO: implement createNewAccount
