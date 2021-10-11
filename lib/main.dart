@@ -5,24 +5,16 @@ import 'routes/routes.dart' as Router;
 import './theme/theme.dart' as Theme;
 
 import './account/repository/account_repository.dart';
-import './account/repository/account_repository_interface.dart';
 
 void main() {
-  AccountRepositoryInterface _accountRepository = AccountRepository();
-  runApp(MyApp(
-    accountRepository: _accountRepository,
-  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({required this.accountRepository});
-
-  final AccountRepositoryInterface accountRepository;
-
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: accountRepository,
+    return RepositoryProvider(
+      create: (_) => AccountRepository(),
       child: AppView(),
     );
   }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_tracker/account/models/account.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../account/bloc/account_bloc.dart';
+import '../../account/bloc/account_bloc_state.dart';
+import '../../account/models/account.dart';
 import './account_widget.dart';
 import './total_balance.dart';
 
@@ -19,38 +22,57 @@ class HomeView extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              "Źródła",
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ),
-          Divider(
-            height: 2,
-          ),
-          AccountView(
-            account: Account(
-              id: "1",
-              name: "First Account",
-              additionalInfo: "PKO BP",
-              balance: 1500000,
-            ),
-          ),
-          AccountView(
-            account: Account(
-              id: "2",
-              name: "Second Account",
-              additionalInfo: "Santander",
-              balance: 3150000,
-            ),
-          ),
-          TotalBalance(totalBalance: 4650000),
-        ],
+      child: BlocBuilder<AccountFetchBloc, AccountFetchState>(
+          buildWhen: (previous, current) => previous.status != current.status,
+          builder: (context, snapshot) {
+            return snapshot.status == AccountStatus.inProgress
+                ? buildCenteredProgressIndicator()
+                : buildAccountsView(
+                    data: snapshot.data,
+                    context: context,
+                  );
+          }),
+    );
+  }
+
+  Widget buildCenteredProgressIndicator() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: CircularProgressIndicator(),
       ),
+    );
+  }
+
+  Widget buildAccountsView(
+      {required List<Account> data, required BuildContext context}) {
+    int accountsTotalBalance = data.fold(
+        0, (previousValue, element) => previousValue += element.balance);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            "Źródła",
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ),
+        Divider(
+          height: 2,
+        ),
+        ...data.map(
+          (accountData) => AccountView(
+            account: Account(
+                id: accountData.id,
+                name: accountData.name,
+                balance: accountData.balance,
+                additionalInfo: accountData.additionalInfo),
+          ),
+        ),
+        TotalBalance(totalBalance: accountsTotalBalance),
+      ],
     );
   }
 
