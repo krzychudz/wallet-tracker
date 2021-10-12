@@ -12,7 +12,7 @@ class AccountRepository implements AccountRepositoryInterface {
 
   @override
   Future<List<Account>> getAccounts() async {
-    // TODO: Change mocked data once db is ready
+    //TODO: Change mocked data once db is ready
     List<Account> mockedAccounts = [
       Account(
         id: "1",

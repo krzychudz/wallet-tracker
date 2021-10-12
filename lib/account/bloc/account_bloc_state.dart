@@ -24,5 +24,5 @@ class AccountFetchState extends Equatable {
   }
 
   @override
-  List<Object> get props => [data];
+  List<Object> get props => [status, data];
 }

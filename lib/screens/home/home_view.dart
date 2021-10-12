@@ -24,31 +24,14 @@ class HomeView extends StatelessWidget {
       ),
       child: BlocBuilder<AccountFetchBloc, AccountFetchState>(
           buildWhen: (previous, current) => previous.status != current.status,
-          builder: (context, snapshot) {
-            return snapshot.status == AccountStatus.inProgress
-                ? buildCenteredProgressIndicator()
-                : buildAccountsView(
-                    data: snapshot.data,
-                    context: context,
-                  );
+          builder: (context, state) {
+            return buildAccountsView(state: state, context: context);
           }),
     );
   }
 
-  Widget buildCenteredProgressIndicator() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-  }
-
   Widget buildAccountsView(
-      {required List<Account> data, required BuildContext context}) {
-    int accountsTotalBalance = data.fold(
-        0, (previousValue, element) => previousValue += element.balance);
-
+      {required AccountFetchState state, required BuildContext context}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -62,17 +45,62 @@ class HomeView extends StatelessWidget {
         Divider(
           height: 2,
         ),
-        ...data.map(
-          (accountData) => AccountView(
-            account: Account(
-                id: accountData.id,
-                name: accountData.name,
-                balance: accountData.balance,
-                additionalInfo: accountData.additionalInfo),
-          ),
-        ),
-        TotalBalance(totalBalance: accountsTotalBalance),
+        ...buildAccountsContent(state, context),
+        buildTotalBalanceSection(state.data),
       ],
+    );
+  }
+
+  Widget buildTotalBalanceSection(List<Account> accountsData) {
+    if (accountsData.isNotEmpty) {
+      int accountsTotalBalance = accountsData.fold(
+          0, (previousValue, element) => previousValue += element.balance);
+      return TotalBalance(totalBalance: accountsTotalBalance);
+    }
+    return SizedBox.shrink();
+  }
+
+  List<Widget> buildAccountsContent(
+      AccountFetchState state, BuildContext context) {
+    switch (state.status) {
+      case AccountStatus.inProgress:
+        return [buildCenteredContent(CircularProgressIndicator())];
+      case AccountStatus.failure:
+        return [
+          buildCenteredContent(Text(
+            "Coś poszło nie tak",
+          ))
+        ];
+      case AccountStatus.success:
+        return state.data.isEmpty
+            ? [
+                buildCenteredContent(
+                  Text(
+                    "Aby dodać swoje pierwsze konto naciśnij +",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                )
+              ]
+            : [
+                ...state.data.map(
+                  (accountData) => AccountView(
+                    account: Account(
+                        id: accountData.id,
+                        name: accountData.name,
+                        balance: accountData.balance,
+                        additionalInfo: accountData.additionalInfo),
+                  ),
+                )
+              ];
+    }
+  }
+
+  Widget buildCenteredContent(Widget child) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: child,
+      ),
     );
   }
 
