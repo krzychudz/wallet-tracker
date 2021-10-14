@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../account/add_account.dart';
 import '../../account/bloc/account_bloc.dart';
 import '../../account/bloc/account_bloc_state.dart';
 import '../../account/models/account.dart';
@@ -35,12 +36,23 @@ class HomeView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            "Źródła",
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "Źródła",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+            IconButton(
+              onPressed: () => Navigator.of(context).pushNamed(
+                AddAccountScreen.routeName,
+              ),
+              icon: Icon(Icons.add),
+            )
+          ],
         ),
         Divider(
           height: 2,
