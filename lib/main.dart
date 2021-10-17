@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './screens/home/home_page.dart';
 import 'routes/routes.dart' as Router;
@@ -8,6 +9,9 @@ import './account/repository/account_repository.dart';
 
 void main() {
   runApp(MyApp());
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.white,
+  ));
 }
 
 class MyApp extends StatelessWidget {

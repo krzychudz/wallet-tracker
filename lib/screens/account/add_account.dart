@@ -9,6 +9,7 @@ class AddAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text(
           "Dodaj konto",
           style: Theme.of(context).textTheme.headline1,

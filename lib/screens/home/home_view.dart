@@ -120,6 +120,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text(
           "Wallet\ntracker",
           style: Theme.of(context).textTheme.headline1,
