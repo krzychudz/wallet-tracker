@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../models/account.dart';
+import '../../models/account.dart';
 
 enum AccountStatus { inProgress, success, failure }
 
