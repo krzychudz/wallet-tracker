@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../account/add_account.dart';
-import '../../account/bloc/account_bloc.dart';
-import '../../account/bloc/account_bloc_state.dart';
+import '../../account/bloc/get_account/account_bloc.dart';
+import '../../account/bloc/get_account/account_bloc_state.dart';
 import '../../account/models/account.dart';
 import './account_widget.dart';
 import './total_balance.dart';
