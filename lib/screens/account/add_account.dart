@@ -46,14 +46,9 @@ class AddAccountScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(
-          top: 16.0,
-          bottom: 16.0,
-          left: 16.0,
-          right: 100.0,
-        ),
+        padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _buildAccountNameForm(),
             SizedBox(
