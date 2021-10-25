@@ -9,6 +9,7 @@ class AddAccountBloc extends Bloc<AddAccountEvent, AddAccountState> {
   AddAccountBloc() : super(const AddAccountState()) {
     on<AccountNameChanged>(_onAccountNameChanged);
     on<AddAccountSubmited>(_onSubmitted);
+    on<AccountSourceNameChanged>(_onAccountSourceNameChanged);
   }
 
   void _onAccountNameChanged(
@@ -19,6 +20,13 @@ class AddAccountBloc extends Bloc<AddAccountEvent, AddAccountState> {
         accountName: accountName,
         status: Formz.validate([accountName]),
       ),
+    );
+  }
+
+  void _onAccountSourceNameChanged(
+      AccountSourceNameChanged event, Emitter<AddAccountState> emit) {
+    emit(
+      state.copyWith(accountSource: event.accountSourceName),
     );
   }
 

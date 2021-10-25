@@ -16,6 +16,15 @@ class AccountNameChanged extends AddAccountEvent {
   List<Object> get props => [accountName];
 }
 
+class AccountSourceNameChanged extends AddAccountEvent {
+  const AccountSourceNameChanged(this.accountSourceName);
+
+  final String accountSourceName;
+
+  @override
+  List<Object> get props => [accountSourceName];
+}
+
 class AddAccountSubmited extends AddAccountEvent {
   const AddAccountSubmited();
 }

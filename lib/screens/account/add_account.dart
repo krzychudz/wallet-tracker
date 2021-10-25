@@ -56,14 +56,17 @@ class AddAccountForm extends StatelessWidget {
         });
   }
 
-  Widget _buildAccountInfoForm() {
+  Widget _buildAccountSourceForm(BuildContext context) {
     return TextField(
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: 'Informacje o koncie',
+      key: const Key('addAccountForm_accountSourceInput_textField'),
+      onChanged: (accountSourceName) => context.read<AddAccountBloc>().add(
+            AccountSourceNameChanged(accountSourceName),
+          ),
+      style: Theme.of(context).textTheme.caption,
+      decoration: InputDecoration(
+        border: UnderlineInputBorder(),
+        labelText: 'Nazwa operatora',
       ),
-      maxLines: 2,
-      maxLength: 50,
     );
   }
 
@@ -85,7 +88,7 @@ class AddAccountForm extends StatelessWidget {
           SizedBox(
             height: 16,
           ),
-          _buildAccountInfoForm(),
+          _buildAccountSourceForm(context),
           SizedBox(
             height: 16,
           ),
