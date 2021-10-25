@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 
 import '../../account/bloc/add_account/add_account_bloc.dart';
 import '../../account/bloc/add_account/add_account_bloc_event.dart';
 import '../../account/bloc/add_account/add_account_bloc_state.dart';
 
 class AddAccountScreen extends StatelessWidget {
-  static String routeName = "/add_account";
-
   const AddAccountScreen({Key? key}) : super(key: key);
+
+  void _showErrorSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        const SnackBar(
+          content: Text('Coś poszło nie tak'),
+        ),
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +32,13 @@ class AddAccountScreen extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      body: BlocProvider(
-        create: (_) => AddAccountBloc(),
+      body: BlocListener<AddAccountBloc, AddAccountState>(
+        listener: (context, state) => {
+          if (state.status.isSubmissionSuccess)
+            Navigator.of(context).pop()
+          else if (state.status.isInvalid)
+            _showErrorSnackbar(context)
+        },
         child: AddAccountForm(),
       ),
     );
@@ -70,10 +84,31 @@ class AddAccountForm extends StatelessWidget {
     );
   }
 
-  Widget _buildSubmitButton() {
-    return ElevatedButton(
-      child: Text("Dodaj konto"),
-      onPressed: () => {},
+  Widget _buildSubmitButton(BuildContext context) {
+    return BlocBuilder<AddAccountBloc, AddAccountState>(
+      buildWhen: (previous, current) => previous.status != current.status,
+      builder: (context, state) {
+        return Column(
+          children: [
+            if (state.status.isSubmissionInProgress)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
+              ),
+            ElevatedButton(
+              key: const Key('addAccountForm_add_raisedButton'),
+              child: Text("Dodaj konto"),
+              onPressed: state.status.isInvalid || !state.status.isValidated
+                  ? null
+                  : () {
+                      context.read<AddAccountBloc>().add(
+                            AddAccountSubmited(),
+                          );
+                    },
+            )
+          ],
+        );
+      },
     );
   }
 
@@ -92,7 +127,7 @@ class AddAccountForm extends StatelessWidget {
           SizedBox(
             height: 16,
           ),
-          _buildSubmitButton()
+          _buildSubmitButton(context)
         ],
       ),
     );
