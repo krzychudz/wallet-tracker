@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wallet_tracker/screens/account/add_account_page.dart';
 import '../account/add_account.dart';
 import '../../account/bloc/get_account/account_bloc.dart';
 import '../../account/bloc/get_account/account_bloc_state.dart';
@@ -48,7 +49,7 @@ class HomeView extends StatelessWidget {
             ),
             IconButton(
               onPressed: () => Navigator.of(context).pushNamed(
-                AddAccountScreen.routeName,
+                AddAccountPage.routeName,
               ),
               icon: Icon(Icons.add),
             )
