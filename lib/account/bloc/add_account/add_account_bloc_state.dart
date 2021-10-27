@@ -25,5 +25,5 @@ class AddAccountState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [status, accountName];
+  List<Object?> get props => [status, accountName, accountSource];
 }

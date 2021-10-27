@@ -36,11 +36,7 @@ class AddAccountScreen extends StatelessWidget {
         listener: (context, state) => {
           if (state.status.isSubmissionSuccess)
             Navigator.of(context).pop()
-<<<<<<< HEAD
           else if (state.status.isSubmissionFailure)
-=======
-          else if (state.status.isInvalid)
->>>>>>> 99c0d5d768e2e361855d26a3578c53ded5c0fdd4
             _showErrorSnackbar(context)
         },
         child: AddAccountForm(),

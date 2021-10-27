@@ -97,11 +97,7 @@ class HomeView extends StatelessWidget {
             : [
                 ...state.data.map(
                   (accountData) => AccountView(
-                    account: Account(
-                        id: accountData.id,
-                        name: accountData.name,
-                        balance: accountData.balance,
-                        additionalInfo: accountData.additionalInfo),
+                    account: accountData,
                   ),
                 )
               ];

@@ -36,7 +36,7 @@ class AccountView extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                       Text(
-                        account.additionalInfo,
+                        account.bankName,
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ],

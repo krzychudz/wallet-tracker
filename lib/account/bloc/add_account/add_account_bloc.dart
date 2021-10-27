@@ -1,16 +1,24 @@
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 
+import '../../../account/models/account.dart';
+import '../../../account/repository/account_repository_interface.dart';
+
 import '../../../screens/account/validators/account_name.dart';
 import '/account/bloc/add_account/add_account_bloc_event.dart';
 import '/account/bloc/add_account/add_account_bloc_state.dart';
 
 class AddAccountBloc extends Bloc<AddAccountEvent, AddAccountState> {
-  AddAccountBloc() : super(const AddAccountState()) {
+  AddAccountBloc({
+    required AccountRepositoryInterface accountRepository,
+  })  : _accountRepository = accountRepository,
+        super(const AddAccountState()) {
     on<AccountNameChanged>(_onAccountNameChanged);
     on<AddAccountSubmited>(_onSubmitted);
     on<AccountSourceNameChanged>(_onAccountSourceNameChanged);
   }
+
+  final AccountRepositoryInterface _accountRepository;
 
   void _onAccountNameChanged(
       AccountNameChanged event, Emitter<AddAccountState> emit) {
@@ -37,10 +45,11 @@ class AddAccountBloc extends Bloc<AddAccountEvent, AddAccountState> {
     if (state.status.isValidated) {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       try {
-        // TODO add account to repository
-        await Future.delayed(
-          Duration(seconds: 3),
+        final accountData = Account(
+          name: state.accountName.value,
+          bankName: state.accountSource,
         );
+        await _accountRepository.createNewAccount(accountData);
         emit(state.copyWith(status: FormzStatus.submissionSuccess));
       } catch (error) {
         emit(state.copyWith(status: FormzStatus.submissionFailure));
