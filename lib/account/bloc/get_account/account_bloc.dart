@@ -13,10 +13,11 @@ class AccountFetchBloc extends Bloc<AccountFetchEvent, AccountFetchState> {
           AccountFetchState(),
         ) {
     on<AccountFetched>(_onFetchEvent);
+    on<AccountListChanged>(_onNewAccountStateEvent);
 
     _accountsStateSubscription =
         _accountRepository.accountState.listen((accountList) {
-      add(AccountFetched());
+      add(AccountListChanged(accountList));
     });
   }
 
@@ -29,6 +30,13 @@ class AccountFetchBloc extends Bloc<AccountFetchEvent, AccountFetchState> {
     emit(state.copyWith(status: AccountStatus.inProgress));
     var accountsData = await _accountRepository.getAccounts();
     emit(state.copyWith(status: AccountStatus.success, data: accountsData));
+  }
+
+  Future<void> _onNewAccountStateEvent(
+      AccountListChanged event, Emitter<AccountFetchState> emit) async {
+    emit(
+      state.copyWith(status: AccountStatus.success, data: event.newAccounts),
+    );
   }
 
   @override

@@ -19,7 +19,7 @@ class AccountRepository implements AccountRepositoryInterface {
       Duration(seconds: 3),
       () {
         _accounts.add(accountData);
-        _controller.add(_accounts);
+        _controller.add([..._accounts]);
         return true;
       },
     );
@@ -27,7 +27,10 @@ class AccountRepository implements AccountRepositoryInterface {
 
   @override
   Future<List<Account>> getAccounts() async {
-    return await Future.delayed(Duration(seconds: 3), () => _accounts);
+    return await Future.delayed(
+      Duration(seconds: 3),
+      () => [..._accounts],
+    );
   }
 
   @override
