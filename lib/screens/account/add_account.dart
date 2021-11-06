@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
@@ -54,33 +57,54 @@ class AddAccountForm extends StatelessWidget {
             previous.accountName != current.accountName,
         builder: (context, state) {
           return TextField(
-            key: const Key('addAccountForm_accountNameInput_textField'),
-            onChanged: (accountName) => context
-                .read<AddAccountBloc>()
-                .add(AccountNameChanged(accountName)),
-            style: Theme.of(context).textTheme.caption,
-            decoration: InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Nazwa konta',
-              errorText: state.accountName.invalid
-                  ? 'Nazwa konta nie może być pusta'
-                  : null,
-            ),
-          );
+              key: const Key('addAccountForm_accountNameInput_textField'),
+              onChanged: (accountName) => context
+                  .read<AddAccountBloc>()
+                  .add(AccountNameChanged(accountName)),
+              style: Theme.of(context).textTheme.caption,
+              decoration: InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Nazwa konta',
+                errorText: state.accountName.invalid
+                    ? 'Nazwa konta nie może być pusta'
+                    : null,
+              ),
+              textInputAction: TextInputAction.next);
         });
   }
 
   Widget _buildAccountSourceForm(BuildContext context) {
     return TextField(
-      key: const Key('addAccountForm_accountSourceInput_textField'),
-      onChanged: (accountSourceName) => context.read<AddAccountBloc>().add(
-            AccountSourceNameChanged(accountSourceName),
+        key: const Key('addAccountForm_accountSourceInput_textField'),
+        onChanged: (accountSourceName) => context.read<AddAccountBloc>().add(
+              AccountSourceNameChanged(accountSourceName),
+            ),
+        style: Theme.of(context).textTheme.caption,
+        decoration: InputDecoration(
+          border: UnderlineInputBorder(),
+          labelText: 'Nazwa banku',
+        ),
+        textInputAction: TextInputAction.next);
+  }
+
+  Widget _buildAccountBalanceForm(BuildContext context) {
+    return TextField(
+      key: const Key('addAccountForm_accountBalanceInput_textField'),
+      onChanged: (accountBalance) => context.read<AddAccountBloc>().add(
+            AccountBalanceChanged(accountBalance),
           ),
       style: Theme.of(context).textTheme.caption,
       decoration: InputDecoration(
         border: UnderlineInputBorder(),
-        labelText: 'Nazwa operatora',
+        labelText: 'Stan Konta',
       ),
+      keyboardType: TextInputType.number,
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(
+          RegExp(r'^\d+(\.\d*)?$'),
+        )
+      ],
+      textInputAction: TextInputAction.done,
     );
   }
 
@@ -124,6 +148,10 @@ class AddAccountForm extends StatelessWidget {
             height: 16,
           ),
           _buildAccountSourceForm(context),
+          SizedBox(
+            height: 16,
+          ),
+          _buildAccountBalanceForm(context),
           SizedBox(
             height: 16,
           ),

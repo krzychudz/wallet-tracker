@@ -25,6 +25,15 @@ class AccountSourceNameChanged extends AddAccountEvent {
   List<Object> get props => [accountSourceName];
 }
 
+class AccountBalanceChanged extends AddAccountEvent {
+  const AccountBalanceChanged(this.accountBalance);
+
+  final String accountBalance;
+
+  @override
+  List<Object> get props => [accountBalance];
+}
+
 class AddAccountSubmited extends AddAccountEvent {
   const AddAccountSubmited();
 }

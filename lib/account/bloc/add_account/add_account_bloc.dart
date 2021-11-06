@@ -16,6 +16,7 @@ class AddAccountBloc extends Bloc<AddAccountEvent, AddAccountState> {
     on<AccountNameChanged>(_onAccountNameChanged);
     on<AddAccountSubmited>(_onSubmitted);
     on<AccountSourceNameChanged>(_onAccountSourceNameChanged);
+    on<AccountBalanceChanged>(_onAccountBalanceNameChanged);
   }
 
   final AccountRepositoryInterface _accountRepository;
@@ -38,6 +39,13 @@ class AddAccountBloc extends Bloc<AddAccountEvent, AddAccountState> {
     );
   }
 
+  void _onAccountBalanceNameChanged(
+      AccountBalanceChanged event, Emitter<AddAccountState> emit) {
+    emit(
+      state.copyWith(accountBalance: event.accountBalance),
+    );
+  }
+
   void _onSubmitted(
     AddAccountSubmited event,
     Emitter<AddAccountState> emit,
@@ -45,9 +53,14 @@ class AddAccountBloc extends Bloc<AddAccountEvent, AddAccountState> {
     if (state.status.isValidated) {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       try {
+        var accountBalanceParsed = state.accountBalance.isEmpty
+            ? 0
+            : (double.parse(state.accountBalance) * 100).toInt();
+
         final accountData = Account(
           name: state.accountName.value,
           bankName: state.accountSource,
+          balance: accountBalanceParsed,
         );
         await _accountRepository.createNewAccount(accountData);
         emit(state.copyWith(status: FormzStatus.submissionSuccess));
