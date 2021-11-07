@@ -19,6 +19,10 @@ ThemeData themeData(BuildContext context) {
         color: const Color(0xff3D4548),
         fontSize: 10.0,
       ),
+      caption: GoogleFonts.montserrat(
+        color: Colors.black,
+        fontSize: 14.0,
+      ),
     ),
   );
 }

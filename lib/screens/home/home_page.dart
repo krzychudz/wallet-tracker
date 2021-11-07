@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wallet_tracker/account/bloc/account_bloc.dart';
-import 'package:wallet_tracker/account/bloc/account_bloc_event.dart';
-import 'package:wallet_tracker/account/repository/account_repository.dart';
+import '../../account/bloc/get_account/account_bloc.dart';
+import '../../account/bloc/get_account/account_bloc_event.dart';
+import '../../account/repository/account_repository.dart';
 
 import '../home/home_view.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../account/add_account.dart';
-import '../../account/bloc/account_bloc.dart';
-import '../../account/bloc/account_bloc_state.dart';
+import 'package:wallet_tracker/screens/account/add_account_page.dart';
+import '../../account/bloc/get_account/account_bloc.dart';
+import '../../account/bloc/get_account/account_bloc_state.dart';
 import '../../account/models/account.dart';
 import './account_widget.dart';
 import './total_balance.dart';
@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
         ],
       ),
       child: BlocBuilder<AccountFetchBloc, AccountFetchState>(
-          buildWhen: (previous, current) => previous.status != current.status,
+          buildWhen: (previous, current) => previous != current,
           builder: (context, state) {
             return buildAccountsView(state: state, context: context);
           }),
@@ -48,7 +48,7 @@ class HomeView extends StatelessWidget {
             ),
             IconButton(
               onPressed: () => Navigator.of(context).pushNamed(
-                AddAccountScreen.routeName,
+                AddAccountPage.routeName,
               ),
               icon: Icon(Icons.add),
             )
@@ -96,11 +96,7 @@ class HomeView extends StatelessWidget {
             : [
                 ...state.data.map(
                   (accountData) => AccountView(
-                    account: Account(
-                        id: accountData.id,
-                        name: accountData.name,
-                        balance: accountData.balance,
-                        additionalInfo: accountData.additionalInfo),
+                    account: accountData,
                   ),
                 )
               ];
@@ -120,6 +116,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text(
           "Wallet\ntracker",
           style: Theme.of(context).textTheme.headline1,
