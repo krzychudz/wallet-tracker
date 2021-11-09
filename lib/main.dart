@@ -7,7 +7,11 @@ import './theme/theme.dart' as Theme;
 
 import './account/repository/account_repository.dart';
 
-void main() {
+import './cache/hive_init.dart' as HiveCache;
+
+void main() async {
+  await HiveCache.initHive();
+
   runApp(MyApp());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white,
