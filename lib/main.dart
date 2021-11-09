@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wallet_tracker/cache/manager/cache_manager.dart';
 import './screens/home/home_page.dart';
 import 'routes/routes.dart' as Router;
 import './theme/theme.dart' as Theme;
@@ -22,7 +23,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (_) => AccountRepository(),
+      create: (_) => AccountRepository(
+        HiveCacheManager(),
+      ),
       child: AppView(),
     );
   }

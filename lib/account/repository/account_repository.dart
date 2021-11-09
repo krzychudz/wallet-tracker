@@ -1,36 +1,34 @@
 import 'dart:async';
 
+import 'package:wallet_tracker/cache/manager/cache_interface.dart';
+
 import './account_repository_interface.dart';
 import '../models/account.dart';
 
 class AccountRepository implements AccountRepositoryInterface {
-  AccountRepository();
+  AccountRepository(
+    this._cacheManager,
+  );
+
+  CacheInterface _cacheManager;
 
   final _controller = StreamController<List<Account>>();
 
   @override
   Stream<List<Account>> get accountState => _controller.stream;
 
-  List<Account> _accounts = [];
-
   @override
-  Future<bool> createNewAccount(Account accountData) {
-    return Future.delayed(
-      Duration(seconds: 3),
-      () {
-        _accounts.add(accountData);
-        _controller.add([..._accounts]);
-        return true;
-      },
+  Future<void> createNewAccount(Account accountData) async {
+    final newAccounts = await _cacheManager.putAccount(accountData);
+    _controller.add(
+      [...newAccounts],
     );
   }
 
   @override
   Future<List<Account>> getAccounts() async {
-    return await Future.delayed(
-      Duration(seconds: 3),
-      () => [..._accounts],
-    );
+    final accounts = await _cacheManager.getAccounts();
+    return [...accounts];
   }
 
   @override
